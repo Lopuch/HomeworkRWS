@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TranslationManagement.Application.BackgroundWorkers;
 using TranslationManagement.Application.Database;
 using TranslationManagement.Application.Models;
 
@@ -19,7 +20,9 @@ namespace TranslationManagement.Api.Controlers
         private readonly ILogger<TranslatorManagementController> _logger;
         private AppDbContext _context;
 
-        public TranslatorManagementController(IServiceScopeFactory scopeFactory, ILogger<TranslatorManagementController> logger)
+        public TranslatorManagementController(
+            IServiceScopeFactory scopeFactory, 
+            ILogger<TranslatorManagementController> logger)
         {
             _context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
             _logger = logger;
