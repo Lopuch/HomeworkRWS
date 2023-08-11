@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Api", "TranslationManagement.Api\TranslationManagement.Api.csproj", "{CF6B0818-2953-48BA-9036-3F75D92E0F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.Api", "TranslationManagement.Api\TranslationManagement.Api.csproj", "{CF6B0818-2953-48BA-9036-3F75D92E0F13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8547FBF7-7179-421B-80BD-2E293D0807A6}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,13 +12,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.ThirdParty.Services", "External.ThirdParty.Services\External.ThirdParty.Services.csproj", "{173F3433-4139-404D-A843-BAF43F6164FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "External.ThirdParty.Services", "External.ThirdParty.Services\External.ThirdParty.Services.csproj", "{173F3433-4139-404D-A843-BAF43F6164FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleData", "SampleData", "{B01CF39A-A9B6-468F-9BC6-06D418302340}"
 	ProjectSection(SolutionItems) = preProject
 		job.txt = job.txt
 		job.xml = job.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Application", "TranslationManagement.Application\TranslationManagement.Application.csproj", "{60C69E22-D517-451B-ACD0-D0E02FB740C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Contracts", "TranslationManagement.Contracts\TranslationManagement.Contracts.csproj", "{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.SDK", "TranslationManagement.SDK\TranslationManagement.SDK.csproj", "{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +40,18 @@ Global
 		{173F3433-4139-404D-A843-BAF43F6164FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{173F3433-4139-404D-A843-BAF43F6164FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{173F3433-4139-404D-A843-BAF43F6164FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C69E22-D517-451B-ACD0-D0E02FB740C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C69E22-D517-451B-ACD0-D0E02FB740C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C69E22-D517-451B-ACD0-D0E02FB740C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C69E22-D517-451B-ACD0-D0E02FB740C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
