@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using TranslationManagement.Application.Database;
+using TranslationManagement.Application;
 
 namespace TranslationManagement.Api
 {
@@ -18,6 +20,8 @@ namespace TranslationManagement.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
