@@ -1,7 +1,0 @@
-{
-  "name": "HomeworkApp",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
