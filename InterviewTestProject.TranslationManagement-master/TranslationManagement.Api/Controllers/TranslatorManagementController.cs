@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,8 @@ using TranslationManagement.Application.BackgroundWorkers;
 using TranslationManagement.Application.Database;
 using TranslationManagement.Application.Models;
 using TranslationManagement.Application.Services;
+using TranslationManagement.Contracts.Requests;
+using TranslationManagement.Contracts.Responses;
 
 namespace TranslationManagement.Api.Controlers
 {
@@ -28,34 +31,45 @@ namespace TranslationManagement.Api.Controlers
         }
 
         [HttpGet(ApiEndpoints.Translators.GetAll)]
+        [ProducesResponseType(typeof(TranslatorModelsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTranslators()
         {
-            return Ok(await _translatorModelService.GetAllTranslators());
+            var translators = await _translatorModelService.GetAllTranslators();
+
+            return Ok(translators.MapToResponse());
         }
 
         [HttpGet(ApiEndpoints.Translators.GetTranslatorsByName)]
+        [ProducesResponseType(typeof(TranslatorModelsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTranslatorsByName(string name)
         {
             var translators = await _translatorModelService.GetTranslatorsByName(name);
 
-            return Ok(translators);
+            return Ok(translators.MapToResponse());
         }
 
         [HttpPost(ApiEndpoints.Translators.Create)]
-        public async Task<IActionResult> CreateTranslator(TranslatorModel translator)
+        [ProducesResponseType(typeof(TranslatorModelResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateTranslator(CreateTranslatorModelRequest request)
         {
-            var result = await _translatorModelService.Create(translator);
+            var translator = request.MapToTranslator();
 
+            var result = await _translatorModelService.Create(translator);
             return result.Match<IActionResult>(
-                _ => Ok(),
+                _ => Created("createdUrlTODO", translator.MapToResponse()),
                 failed => BadRequest(failed.MapToResponse())
                 );
         }
 
         [HttpPost(ApiEndpoints.Translators.UpdateStatus)]
-        public async Task<IActionResult> UpdateTranslatorStatus(int translatorId, string newStatus = "")
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateTranslatorStatus([FromBody] UpdateTranslatorStatusRequest request)
         {
-            var result = await _translatorModelService.UpdateStatus(translatorId, newStatus);
+            var result = await _translatorModelService.UpdateStatus(
+                request.TranslatorId, request.NewStatus);
 
             return result.Match<IActionResult>(
                 _ => Ok(),
