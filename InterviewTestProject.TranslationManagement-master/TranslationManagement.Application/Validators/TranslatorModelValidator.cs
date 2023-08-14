@@ -14,6 +14,26 @@ public class TranslatorModelValidator : AbstractValidator<TranslatorModel>
         RuleFor(x => x.Name)
             .NotEmpty();
 
+        RuleFor(x => x.Status)
+            .Must(ValidateStatus)
+            .WithMessage("unknown status");
+
         ///RuleFor...
+    }
+
+    private bool ValidateStatus(TranslatorModel model, string newStatus)
+    {
+        if (string.IsNullOrWhiteSpace(newStatus))
+        {
+            return false;
+        }
+
+        var enums = typeof(TranslatorStatuses).GetEnumNames();
+        if (enums.Count(name => name == newStatus) == 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
