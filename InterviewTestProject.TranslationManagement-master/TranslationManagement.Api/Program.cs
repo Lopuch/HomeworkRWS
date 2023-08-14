@@ -18,6 +18,18 @@ using Asp.Versioning;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "BadCorsPolicy",
+        builder =>
+        {
+            builder.AllowAnyOrigin();
+            builder.AllowAnyMethod();
+            builder.AllowAnyHeader();
+        });
+});
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -85,6 +97,16 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+using (var serviceScope = app.Services.CreateScope())
+{
+    // automatic startup database migration
+    var scope = app.Services.GetService<IServiceScopeFactory>().CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.Migrate();
+
+    //var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+    //dbContext.Database.Migrate();
+}
 
 app.UseHttpsRedirection();
 
@@ -93,6 +115,9 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+
+
+app.UseCors("BadCorsPolicy");
 
 app.Run();
 
