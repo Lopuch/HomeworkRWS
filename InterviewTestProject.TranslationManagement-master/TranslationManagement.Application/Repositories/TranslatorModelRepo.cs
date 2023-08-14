@@ -14,6 +14,7 @@ public interface ITranslatorModelRepo
     void Add(TranslatorModel translator);
     Task<TranslatorModel?> GetByIdAsync(int id);
     Task<IEnumerable<TranslatorModel>> GetAllAsync();
+    Task<IEnumerable<TranslatorModel>> GetByName(string name);
 }
 
 public class TranslatorModelRepo : ITranslatorModelRepo
@@ -40,5 +41,10 @@ public class TranslatorModelRepo : ITranslatorModelRepo
     public async Task<IEnumerable<TranslatorModel>> GetAllAsync()
     {
         return await _context.Translators.ToListAsync();
+    }
+
+    public async Task<IEnumerable<TranslatorModel>> GetByName(string name)
+    {
+        return await _context.Translators.Where(x => x.Name == name).ToListAsync();
     }
 }
