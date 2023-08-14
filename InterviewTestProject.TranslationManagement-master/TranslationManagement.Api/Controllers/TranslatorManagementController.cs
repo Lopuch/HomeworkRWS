@@ -13,13 +13,8 @@ using TranslationManagement.Application.Services;
 namespace TranslationManagement.Api.Controlers
 {
     [ApiController]
-    [Route("api/TranslatorsManagement/[action]")]
     public class TranslatorManagementController : ControllerBase
     {
-
-
-        public static readonly string[] TranslatorStatuses = { "Applicant", "Certified", "Deleted" };
-
         private readonly ILogger<TranslatorManagementController> _logger;
         private readonly ITranslatorModelService _translatorModelService;
 
@@ -32,13 +27,13 @@ namespace TranslationManagement.Api.Controlers
             _translatorModelService = translatorModelService;
         }
 
-        [HttpGet]
+        [HttpGet(ApiEndpoints.Translators.GetAll)]
         public async Task<IActionResult> GetTranslators()
         {
             return Ok(await _translatorModelService.GetAllTranslators());
         }
 
-        [HttpGet]
+        [HttpGet(ApiEndpoints.Translators.GetTranslatorsByName)]
         public async Task<IActionResult> GetTranslatorsByName(string name)
         {
             var translators = await _translatorModelService.GetTranslatorsByName(name);
@@ -46,8 +41,8 @@ namespace TranslationManagement.Api.Controlers
             return Ok(translators);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddTranslator(TranslatorModel translator)
+        [HttpPost(ApiEndpoints.Translators.Create)]
+        public async Task<IActionResult> CreateTranslator(TranslatorModel translator)
         {
             var result = await _translatorModelService.Create(translator);
 
@@ -57,7 +52,7 @@ namespace TranslationManagement.Api.Controlers
                 );
         }
 
-        [HttpPost]
+        [HttpPost(ApiEndpoints.Translators.UpdateStatus)]
         public async Task<IActionResult> UpdateTranslatorStatus(int translatorId, string newStatus = "")
         {
             var result = await _translatorModelService.UpdateStatus(translatorId, newStatus);
