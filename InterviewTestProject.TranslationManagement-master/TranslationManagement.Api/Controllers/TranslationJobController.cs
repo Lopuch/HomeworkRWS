@@ -15,63 +15,73 @@ using TranslationManagement.Application.Models;
 using TranslationManagement.Application.Services;
 
 using TranslationManagement.Api.Mappings;
+using TranslationManagement.Contracts.Requests;
+using TranslationManagement.Contracts.Responses;
 
 namespace TranslationManagement.Api.Controllers
 {
     [ApiController]
     public class TranslationJobController : ControllerBase
     {
-        private AppDbContext _context;
         private readonly ILogger<TranslatorManagementController> _logger;
 
         private readonly ITranslationJobService _translationJobService;
 
         public TranslationJobController(
-            IServiceScopeFactory scopeFactory, 
             ILogger<TranslatorManagementController> logger, 
             ITranslationJobService translationJobService)
         {
-            _context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
             _logger = logger;
             _translationJobService = translationJobService;
         }
 
         [HttpGet(ApiEndpoints.Jobs.GetAll)]
+        [ProducesResponseType(typeof(TranslationJobsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetJobs()
         {
             var jobs = await _translationJobService.GetAllJobsAsync();
 
-            return Ok(jobs);
+            return Ok(jobs.MapToResponse());
         }
 
         [HttpPost(ApiEndpoints.Jobs.Create)]
-        public async Task<IActionResult> CreateJob(TranslationJob job)
+        [ProducesResponseType(typeof(TranslationJobResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateJob([FromBody]CreateTranslationJobRequest request)
         {
+            var job = request.MapToJob();
+
             var result = await _translationJobService.Create(job);
 
             return result.Match<IActionResult>(
-                _ => Ok(),
+                _ => Created("createdUrlTODO", job.MapToResponse()),
                 failed => BadRequest(failed.MapToResponse())
                 );
         }
 
         [HttpPost(ApiEndpoints.Jobs.CreateWithFile)]
+        [ProducesResponseType(typeof(TranslationJobResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJobWithFile(IFormFile file, string customer)
         {
             var result = await _translationJobService.CreateWithFile(file, customer);
-
             return result.Match<IActionResult>(
-                _ => Ok(),
+                _ => Created("createdUrlTODO", result.AsT0),
                 failed => BadRequest(failed.MapToResponse())
                 );
         }
 
         [HttpPost(ApiEndpoints.Jobs.UpdateStatus)]
-        public async Task<IActionResult> UpdateJobStatus(int jobId, int translatorId, string newStatus = "")
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateJobStatus([FromBody] UpdateTranslationJobStatusRequest request)
         {
-            _logger.LogInformation("Job status update request received: {jobStatus} for job {jobId} by translator {translatorId}", newStatus, jobId, translatorId);
+            _logger.LogInformation(
+                "Job status update request received: {jobStatus} for job {jobId} by translator {translatorId}",
+                request.NewStatus, request.JobId, request.TranslatorId);
 
-            var result = await _translationJobService.UpdateJobStatus(jobId, newStatus);
+            var result = await _translationJobService.UpdateJobStatus(request.JobId, request.NewStatus);
 
             return result.Match<IActionResult>(
                 _ => Ok(),

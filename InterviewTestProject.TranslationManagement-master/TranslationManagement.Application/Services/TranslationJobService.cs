@@ -21,7 +21,7 @@ public interface ITranslationJobService
     Task<IEnumerable<TranslationJob>> GetAllJobsAsync();
     Task<OneOf<TranslationJob, NotFound>> GetByIdAsync(int jobId);
     Task<OneOf<Success, ValidationFailed>> Create(TranslationJob job);
-    Task<OneOf<Success, ValidationFailed>> CreateWithFile(IFormFile file, string customer);
+    Task<OneOf<TranslationJob, ValidationFailed>> CreateWithFile(IFormFile file, string customer);
     Task<OneOf<Success, NotFound, ValidationFailed>> UpdateJobStatus(int jobId, string newStatus);
     void SetPrice(TranslationJob job);
 }
@@ -60,8 +60,6 @@ public class TranslationJobService : ITranslationJobService
 
     public async Task<OneOf<Success, ValidationFailed>> Create(TranslationJob job)
     {
-        job.Status = "New";
-
         SetPrice(job);
 
         var validationResult = _jobValidator.Validate(job);
@@ -78,7 +76,7 @@ public class TranslationJobService : ITranslationJobService
         return new Success();
     }
 
-    public async Task<OneOf<Success, ValidationFailed>> CreateWithFile(IFormFile file, string customer)
+    public async Task<OneOf<TranslationJob, ValidationFailed>> CreateWithFile(IFormFile file, string customer)
     {
         var fileResult = ProcessFile(file, customer);
 
@@ -93,12 +91,17 @@ public class TranslationJobService : ITranslationJobService
         {
             OriginalContent = processedFile.content,
             TranslatedContent = "",
+            Status = nameof(JobStatuses.New),
             CustomerName = processedFile.customer,
         };
 
         SetPrice(newJob);
 
-        return await Create(newJob);
+        var result = await Create(newJob);
+
+        return result.Match<OneOf<TranslationJob, ValidationFailed>>(
+            _ => newJob,
+            failed => failed);
     }
 
     public void SetPrice(TranslationJob job)

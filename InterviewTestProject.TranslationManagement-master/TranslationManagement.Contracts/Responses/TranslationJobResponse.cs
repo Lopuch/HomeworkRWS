@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TranslationManagement.Application.Models;
-public class TranslationJob
+namespace TranslationManagement.Contracts.Responses;
+public class TranslationJobResponse
 {
-    public int Id { get; set; }
+    public required int Id { get; set; }
     public required string CustomerName { get; set; }
     public required string Status { get; set; }
     public required string OriginalContent { get; set; }
     public required string TranslatedContent { get; set; }
-    public double Price { get; set; }
+    public required double Price { get; set; }
 }
