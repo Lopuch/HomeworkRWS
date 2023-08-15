@@ -10,7 +10,7 @@ using TranslationManagement.Application.Database;
 namespace TranslationManagement.Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230814114523_initial migration")]
+    [Migration("20230815063932_initial migration")]
     partial class initialmigration
     {
         /// <inheritdoc />
