@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ public class TranslationJob
     public required string Status { get; set; }
     public required string OriginalContent { get; set; }
     public required string TranslatedContent { get; set; }
-    public double Price { get; set; }
+    [Precision(14, 4)]
+    public decimal Price { get; set; }
 }

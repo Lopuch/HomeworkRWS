@@ -18,6 +18,18 @@ using Asp.Versioning;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "BadCorsPolicy",
+        builder =>
+        {
+            builder.AllowAnyOrigin();
+            builder.AllowAnyMethod();
+            builder.AllowAnyHeader();
+        });
+});
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -72,6 +84,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var services = scope.ServiceProvider;
+
+        var context = services.GetRequiredService<AppDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        logger.LogError("Unable to migrate database. Exception: {Exc}", ex);
+        throw;
+    }
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -87,6 +116,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseCors("BadCorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -52,6 +52,18 @@ public static class ContractMapping
         };
     }
 
+    public static TranslatorModel MapToTranslator(this UpdateTranslatorModelRequest request, int id)
+    {
+        return new TranslatorModel
+        {
+            Id = id,
+            CreditCardNumber = request.CreditCardNumber,
+            HourlyRate = request.HourlyRate,
+            Name = request.Name,
+            Status = request.Status,
+        };
+    }
+
 
     public static TranslatorModelResponse MapToResponse(this TranslatorModel translator)
     {

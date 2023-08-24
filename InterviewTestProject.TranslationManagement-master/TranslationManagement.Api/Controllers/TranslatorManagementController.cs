@@ -64,6 +64,21 @@ namespace TranslationManagement.Api.Controlers
                 );
         }
 
+        [HttpPut(ApiEndpoints.Translators.Update)]
+        [ProducesResponseType(typeof(TranslatorModelResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateTranslator([FromRoute]int id, [FromBody]UpdateTranslatorModelRequest request)
+        {
+            var translator = request.MapToTranslator(id);
+
+            var result = await _translatorModelService.Update(translator);
+            return result.Match<IActionResult>(
+                x => Ok(x.MapToResponse()),
+                _ => NotFound(),
+                failed => BadRequest(failed.MapToResponse())
+                );
+        }
+
         [Authorize(AuthConstants.AdminUserPolicyName)]
         [HttpPost(ApiEndpoints.Translators.UpdateStatus)]
         [ProducesResponseType(StatusCodes.Status200OK)]

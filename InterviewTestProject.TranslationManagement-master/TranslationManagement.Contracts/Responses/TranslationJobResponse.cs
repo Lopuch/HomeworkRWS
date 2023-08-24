@@ -12,5 +12,5 @@ public class TranslationJobResponse
     public required string Status { get; set; }
     public required string OriginalContent { get; set; }
     public required string TranslatedContent { get; set; }
-    public required double Price { get; set; }
+    public required decimal Price { get; set; }
 }

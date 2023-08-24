@@ -1,0 +1,11 @@
+<h1>Translators</h1>
+
+<div style="display: flex; flex-direction: column; gap: 16px;">
+  <app-translator-detail
+    *ngFor="let translator of translatorService.translators$ | async"
+    [translator]="translator"
+
+  ></app-translator-detail>
+
+  <ion-button (click)="onNewTranslatorClick()">Add new translator</ion-button>
+</div>
