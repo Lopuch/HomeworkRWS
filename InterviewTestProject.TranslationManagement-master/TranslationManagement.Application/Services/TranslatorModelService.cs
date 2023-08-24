@@ -19,6 +19,7 @@ public interface ITranslatorModelService
     Task<IEnumerable<TranslatorModel>> GetTranslatorsByName(string name);
     Task<OneOf<TranslatorModel, NotFound>> GetById(int id);
     Task<OneOf<Success, ValidationFailed>> Create(TranslatorModel translator);
+    Task<OneOf<TranslatorModel, NotFound, ValidationFailed>> Update(TranslatorModel translator);
     Task<OneOf<Success, NotFound, ValidationFailed>> UpdateStatus(int translatorId, string status);
 }
 
@@ -59,6 +60,31 @@ public class TranslatorModelService : ITranslatorModelService
         await _unitOfWork.Complete();
 
         return new Success();
+    }
+
+    public async Task<OneOf<TranslatorModel, NotFound, ValidationFailed>> Update(TranslatorModel translator)
+    {
+        var validationResult = _translatorValidator.Validate(translator);
+        if (!validationResult.IsValid)
+        {
+            return new ValidationFailed(validationResult.Errors);
+        }
+
+        var existingValidatorRes = await GetById(translator.Id);
+        if(existingValidatorRes.Value is NotFound)
+        {
+            return new NotFound();
+        }
+
+        var translatorDb = existingValidatorRes.AsT0;
+
+        translatorDb.Status = translator.Status;
+        translatorDb.CreditCardNumber = translator.CreditCardNumber;
+        translatorDb.HourlyRate = translator.HourlyRate;
+        translatorDb.Name = translator.Name;
+
+        await _unitOfWork.Complete();
+        return translatorDb;
     }
 
     public async Task<OneOf<TranslatorModel, NotFound>> GetById(int id)

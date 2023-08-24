@@ -1,0 +1,29 @@
+<div class="wrapper" *ngIf="translator">
+  <ion-item-group>
+    <ion-item>
+      <ion-input label="name" label-placement="floating" [(ngModel)]="translator.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="horly rate" label-placement="floating" [(ngModel)]="translator.hourlyRate"
+                 type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <div style="display: flex; flex-direction: column">
+        <div style="font-size: 12px; margin-bottom: 5px">status</div>
+        <div>
+          {{translator.status}}
+          <ion-button (click)="onStatusClick(translator)">select</ion-button>
+        </div>
+      </div>
+      <!--<ion-input [disabled]="true" label="status" label-placement="floating" [(ngModel)]="translator.status"></ion-input>-->
+    </ion-item>
+    <ion-item>
+      <ion-input label="credit card number" label-placement="floating"
+                 [(ngModel)]="translator.creditCardNumber"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="onSaveClick(translator)">save</ion-button>
+    </ion-item>
+  </ion-item-group>
+</div>

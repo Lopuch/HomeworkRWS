@@ -1,5 +1,5 @@
 ﻿namespace TranslationManagement.Contracts.Requests;
-public class CreateTranslatorModelRequest
+public class UpdateTranslatorModelRequest
 {
     public required string Name { get; init; }
     public required decimal HourlyRate { get; init; }

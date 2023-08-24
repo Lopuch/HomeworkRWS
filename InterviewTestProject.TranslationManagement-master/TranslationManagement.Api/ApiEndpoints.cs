@@ -20,6 +20,7 @@ public static class ApiEndpoints
         private const string Base = $"{ApiBase}/translators";
 
         public const string Create = Base;
+        public const string Update = $"{Base}/{{id}}";
         public const string GetTranslatorsByName = $"{Base}/{{name}}";
         public const string GetAll = Base;
         public const string UpdateStatus = $"{Base}/updateStatus";

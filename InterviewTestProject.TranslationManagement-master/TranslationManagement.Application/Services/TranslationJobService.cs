@@ -106,7 +106,7 @@ public class TranslationJobService : ITranslationJobService
 
     public void SetPrice(TranslationJob job)
     {
-        job.Price = job.OriginalContent.Length * PricePerCharacter;
+        job.Price = (Decimal)(job.OriginalContent.Length * PricePerCharacter);
     }
 
     public OneOf<(string content, string customer), ValidationFailed> ProcessFile(IFormFile file, string customer)
