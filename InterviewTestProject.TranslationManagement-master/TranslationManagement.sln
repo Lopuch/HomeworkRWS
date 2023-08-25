@@ -20,11 +20,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleData", "SampleData", 
 		job.xml = job.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Application", "TranslationManagement.Application\TranslationManagement.Application.csproj", "{60C69E22-D517-451B-ACD0-D0E02FB740C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.Application", "TranslationManagement.Application\TranslationManagement.Application.csproj", "{60C69E22-D517-451B-ACD0-D0E02FB740C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Contracts", "TranslationManagement.Contracts\TranslationManagement.Contracts.csproj", "{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.Contracts", "TranslationManagement.Contracts\TranslationManagement.Contracts.csproj", "{A4BC324D-D1C9-45DC-A1BB-9A8CE6F2BA7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.SDK", "TranslationManagement.SDK\TranslationManagement.SDK.csproj", "{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.SDK", "TranslationManagement.SDK\TranslationManagement.SDK.csproj", "{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{542F85FA-1236-4000-BE7F-F53D0B8FABE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Application.Tests.Unit", "TranslationManagement.Application.Tests.Unit\TranslationManagement.Application.Tests.Unit.csproj", "{E2889270-4DEA-4443-A04B-0D8A83E79FBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,9 +56,16 @@ Global
 		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D0A1DD-D0EA-4758-AD18-03CDDC5F5530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2889270-4DEA-4443-A04B-0D8A83E79FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2889270-4DEA-4443-A04B-0D8A83E79FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2889270-4DEA-4443-A04B-0D8A83E79FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2889270-4DEA-4443-A04B-0D8A83E79FBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E2889270-4DEA-4443-A04B-0D8A83E79FBF} = {542F85FA-1236-4000-BE7F-F53D0B8FABE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {821E39E6-0BB8-498C-9510-D913968AA6FF}
